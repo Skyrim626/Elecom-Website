@@ -264,7 +264,7 @@ const HomePage = () => {
                 {visibleProducts.map((product, index) => (
                   <ProductCard
                     key={index}
-                    page="landing"
+                    // page="landing"
                     productID={product.id}
                     productImage={product.image}
                     productName={product.productName}

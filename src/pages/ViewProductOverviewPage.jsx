@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import Page from "../components/common/Page";
-import { StarIcon, X } from "lucide-react";
+import { Copy, Facebook, StarIcon, Twitter, X } from "lucide-react";
 
 import { Minus, Plus } from "lucide-react"; // Import Lucide icons
-import { Dialog } from "@headlessui/react";
+import { Button, Dialog } from "@headlessui/react";
 
 const ViewProductOverviewPage = () => {
   // Open Params
@@ -14,8 +14,13 @@ const ViewProductOverviewPage = () => {
   const location = useLocation();
 
   // Access the passed product object
-  const { productImage, productName, productDescription, productPrice } =
-    location.state;
+  const {
+    productImage,
+    productName,
+    productDescription,
+    productPrice,
+    productOrganization,
+  } = location.state;
 
   // Quantity State
   const [quantity, setQuantity] = useState(1);
@@ -78,6 +83,14 @@ const ViewProductOverviewPage = () => {
             <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
               {productName || "Awesome Product"}
             </h1>
+
+            <p className="text-md font-semibold mt-3 text-gray-500">
+              Organization: {productOrganization}
+            </p>
+
+            <p className="mt-3 text-sm font-semibold text-gray-400">
+              Category: Clothes
+            </p>
           </div>
 
           {/* Options */}
@@ -213,6 +226,35 @@ const ViewProductOverviewPage = () => {
                   Product details go here. It includes the manufacturing
                   process, materials used, and other important specifications.
                 </p>
+              </div>
+            </div>
+
+            <hr className="my-5" />
+
+            <div>
+              <h2 className="text-sm font-medium text-gray-900">Share</h2>
+              <div className="flex gap-3 bg-white rounded-lg">
+                <Button
+                  className="flex items-center gap-2 py-2 text-gray-700 hover:text-blue-600 transition-all duration-200"
+                  onClick={() => alert("Shared to Facebook!")}
+                >
+                  <Facebook />
+                  <span className="text-sm font-medium">Facebook</span>
+                </Button>
+                <Button
+                  className="flex items-center gap-2 py-2 text-gray-700 hover:text-blue-600 transition-all duration-200"
+                  onClick={() => alert("Shared to Twitter!")}
+                >
+                  <Twitter />
+                  <span className="text-sm font-medium">Twitter</span>
+                </Button>
+                <Button
+                  className="flex items-center gap-2 py-2 text-gray-700 hover:text-blue-600 transition-all duration-200"
+                  onClick={() => alert("Link Copied!")}
+                >
+                  <Copy />
+                  <span className="text-sm font-medium">Copy Link</span>
+                </Button>
               </div>
             </div>
           </div>

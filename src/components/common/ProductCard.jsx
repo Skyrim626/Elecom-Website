@@ -8,7 +8,7 @@ import {
   Copy,
 } from "lucide-react";
 import { Button } from "@headlessui/react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const ProductCard = ({
   page,
@@ -22,6 +22,10 @@ const ProductCard = ({
   productDiscountPercentage,
   productIsNew,
 }) => {
+  // Open Location
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const formattedPrice = productPrice.toLocaleString();
 
   // State to toggle the share menu
@@ -127,28 +131,44 @@ const ProductCard = ({
         <div className="mt-auto flex flex-col gap-3">
           <div className="flex items-center justify-between">
             {/* Display formatted price */}
-            <p className="text-md font-bold">₱{formattedPrice}</p>
+            <p className="text-sm font-bold">₱{formattedPrice}</p>
             {productIsDiscount && (
-              <p className="text-md font-bold text-gray-400 line-through">
+              <p className="text-sm font-bold text-gray-400 line-through">
                 ₱{productPrice.toLocaleString()}
               </p>
             )}
           </div>
 
           <div className="flex flex-col gap-1">
-            <Link
-              to={`/products/${productID}`}
-              state={{
-                productName: productName,
-                productImage: productImage,
-                productDescription: productDescription,
-                productPrice: productPrice,
+            <Button
+              onClick={() => {
+                // Check if pathname is '/'
+                if (location.pathname === "/") {
+                  navigate(`/shops/products/${productID}`, {
+                    state: {
+                      productName: productName,
+                      productImage: productImage,
+                      productDescription: productDescription,
+                      productPrice: productPrice,
+                      productOrganization: productOrganization,
+                    },
+                  });
+                } else {
+                  navigate(`${location.pathname}/products/${productID}`, {
+                    state: {
+                      productName: productName,
+                      productImage: productImage,
+                      productDescription: productDescription,
+                      productPrice: productPrice,
+                      productOrganization: productOrganization,
+                    },
+                  });
+                }
               }}
+              className="w-full text-sm bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-md px-4 py-2 transition-all duration-300"
             >
-              <Button className="w-full text-sm bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-md px-4 py-2 transition-all duration-300">
-                More Info
-              </Button>
-            </Link>
+              More Info
+            </Button>
 
             {page !== "landing" && (
               <Button className="w-full text-sm bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md px-4 py-2 transition-all duration-300">

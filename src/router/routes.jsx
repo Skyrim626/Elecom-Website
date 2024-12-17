@@ -24,6 +24,7 @@ import VisitorLayout from "../layouts/VisitorLayout";
 import ShoppingPage from "../pages/ShoppingPage";
 import TrackingProductsPage from "../pages/TrackingProductsPage";
 import ViewProductOverviewPage from "../pages/ViewProductOverviewPage";
+import { path } from "framer-motion/client";
 
 /**
  * Elecom Routes
@@ -95,6 +96,20 @@ const officerRoutes = {
           element: <OfficerMembersPage />,
         },
         {
+          path: "shops",
+          element: <Outlet />,
+          children: [
+            {
+              index: true,
+              element: <ShoppingPage />,
+            },
+            {
+              path: "products/:id",
+              element: <ViewProductOverviewPage />,
+            },
+          ],
+        },
+        {
           path: "account-settings",
           element: <ViewAccountSettingsPage role={"officer"} />,
         },
@@ -158,15 +173,21 @@ const router = createBrowserRouter([
           },
           {
             path: "shops",
-            element: <ShoppingPage page={"landing"} />,
+            element: <Outlet />,
+            children: [
+              {
+                index: true,
+                element: <ShoppingPage />,
+              },
+              {
+                path: "products/:id",
+                element: <ViewProductOverviewPage />,
+              },
+            ],
           },
           {
             path: "trackings",
             element: <TrackingProductsPage />,
-          },
-          {
-            path: "products/:id",
-            element: <ViewProductOverviewPage />,
           },
         ],
       },
