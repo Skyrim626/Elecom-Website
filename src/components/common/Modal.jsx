@@ -32,7 +32,9 @@ const Modal = ({ isModalOpen, setIsModalOpen, children }) => {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            {children}
+            <div className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50">
+              {children}
+            </div>
           </Transition.Child>
         </div>
       </Dialog>

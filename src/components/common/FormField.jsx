@@ -8,6 +8,9 @@ const FormField = ({
   id,
   placeholder,
   required = false,
+  onChange,
+  value,
+  name,
 }) => {
   return (
     <Field>
@@ -23,6 +26,9 @@ const FormField = ({
         className="mt-2 block w-full rounded-md border border-gray-300 py-2 px-3 text-sm text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         placeholder={placeholder || "Enter placeholder"}
         required={required}
+        name={name}
+        value={value}
+        onChange={onChange}
       />
     </Field>
   );

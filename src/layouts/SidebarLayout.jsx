@@ -6,16 +6,25 @@ import { Button } from "@headlessui/react";
 
 import {
   Link,
+  Navigate,
   NavLink,
   Outlet,
   useLocation,
   useNavigate,
 } from "react-router-dom";
 import { adminMenus, elecomMenus, officerMenus } from "../constants/menu";
+import { useStateContext } from "../contexts/ContextProvider";
 
 const SidebarLayout = ({ role }) => {
+  const { userToken, currentRole } = useStateContext();
   const [open, setIsOpen] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState(0); // New state for tracking selected index
+
+  // Check if token and role does exist
+  if (!userToken && !currentRole) {
+    // Return Navigate to specific path
+    return <Navigate to="/" />;
+  }
 
   // Determine menus based on role
   const roleMenus = {

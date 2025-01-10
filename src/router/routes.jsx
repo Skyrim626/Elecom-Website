@@ -5,15 +5,12 @@ import GuestLayout from "../layouts/GuestLayout";
 /**
  * Elecom Pages
  */
-import ElecomLoginPage from "../pages/elecom/ElecomLoginPage";
-import OfficerLoginPage from "../pages/officer/OfficerLoginPage";
 import ElecomHomePage from "../pages/elecom/ElecomHomePage";
 import SidebarLayout from "../layouts/SidebarLayout";
 import ElecomCandidatePage from "../pages/elecom/ElecomCandidatePage";
 import ElecomVotesPage from "../pages/elecom/ElecomVotesPage";
 import ElecomViewVotePage from "../pages/elecom/ElecomViewVotePage";
-import AdminLoginPage from "../pages/admin/AdminLoginPage";
-import AdminOrganizationsPage from "../pages/admin/AdminOrganizationsPage";
+
 import AdminAccountsPage from "../pages/admin/AdminAccountsPage";
 import OfficerDashboardPage from "../pages/officer/OfficerDashboardPage";
 import OfficerMembersPage from "../pages/officer/OfficerMembersPage";
@@ -24,7 +21,10 @@ import VisitorLayout from "../layouts/VisitorLayout";
 import ShoppingPage from "../pages/ShoppingPage";
 import TrackingProductsPage from "../pages/TrackingProductsPage";
 import ViewProductOverviewPage from "../pages/ViewProductOverviewPage";
-import { path } from "framer-motion/client";
+import LoginPage from "../pages/LoginPage";
+import ManageOrganizationsPage from "../pages/ManageOrganizationsPage";
+import ManageOrganizationPage from "../pages/ManageOrganizationPage";
+import ViewMemberPage from "../pages/ViewMemberPage";
 
 /**
  * Elecom Routes
@@ -67,7 +67,7 @@ const elecomRoutes = {
     },
     {
       path: "login",
-      element: <ElecomLoginPage />,
+      element: <LoginPage role={"elecom"} />,
     },
   ],
 };
@@ -117,7 +117,7 @@ const officerRoutes = {
     },
     {
       path: "login",
-      element: <OfficerLoginPage role={"officer"} />,
+      element: <LoginPage role={"officer"} />,
     },
   ],
 };
@@ -127,29 +127,33 @@ const officerRoutes = {
  */
 const adminRoutes = {
   path: "/ad",
-  element: <Outlet />,
+  element: <SidebarLayout role={"admin"} />,
   children: [
     {
-      path: "/ad",
-      element: <SidebarLayout role={"admin"} />,
+      index: true,
+      element: <ManageOrganizationsPage role={"admin"} />,
+    },
+    {
+      path: ":id",
+      element: <Outlet />,
       children: [
         {
           index: true,
-          element: <AdminOrganizationsPage />,
+          element: <ManageOrganizationPage role={"admin"} />,
         },
         {
-          path: "accounts",
-          element: <AdminAccountsPage />,
-        },
-        {
-          path: "account-settings",
-          element: <ViewAccountSettingsPage role={"admin"} />,
+          path: "members/:memberID",
+          element: <ViewMemberPage role={"admin"} />,
         },
       ],
     },
     {
-      path: "login",
-      element: <AdminLoginPage />,
+      path: "accounts",
+      element: <AdminAccountsPage />,
+    },
+    {
+      path: "account-settings",
+      element: <ViewAccountSettingsPage role={"admin"} />,
     },
   ],
 };
@@ -159,6 +163,8 @@ const adminRoutes = {
  */
 
 const router = createBrowserRouter([
+  adminRoutes,
+
   {
     path: "/",
     element: <GuestLayout />,
@@ -193,9 +199,12 @@ const router = createBrowserRouter([
       },
 
       /**
-       * Admin Routes
+       * Admin Login
        */
-      adminRoutes,
+      {
+        path: "/ad/login",
+        element: <LoginPage role={"admin"} />,
+      },
 
       /**
        * Elecom Pages

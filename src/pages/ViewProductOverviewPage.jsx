@@ -5,6 +5,7 @@ import { Copy, Facebook, StarIcon, Twitter, X } from "lucide-react";
 
 import { Minus, Plus } from "lucide-react"; // Import Lucide icons
 import { Button, Dialog } from "@headlessui/react";
+import ViewSelectedImageModal from "../components/modals/ViewSelectedImageModal";
 
 const ViewProductOverviewPage = () => {
   // Open Params
@@ -260,35 +261,13 @@ const ViewProductOverviewPage = () => {
           </div>
         </div>
 
-        {/* Modal with Backdrop */}
-        {isOpen && (
-          <Dialog open={isOpen} onClose={closeModal}>
-            {/* Backdrop with click-to-close functionality */}
-            <div
-              className="fixed inset-0 bg-black bg-opacity-60 z-40 transition-opacity duration-300"
-              onClick={closeModal}
-            ></div>
-
-            {/* Modal Content */}
-            <Dialog.Panel className="fixed inset-0 flex items-center justify-center p-6 z-50">
-              <div className="bg-white rounded-lg overflow-hidden shadow-lg transition-transform transform scale-95 duration-300 ease-in-out hover:scale-100 relative max-w-3xl sm:max-w-4xl md:max-w-5xl lg:max-w-6xl">
-                {/* Close Button (X) */}
-                <button
-                  className="absolute top-4 right-4 text-white text-xl font-bold bg-black rounded-full p-2 hover:bg-gray-700"
-                  onClick={closeModal}
-                >
-                  <X />
-                </button>
-
-                <img
-                  src={selectedImage}
-                  alt="Selected"
-                  className="w-full h-auto rounded-lg object-cover"
-                />
-              </div>
-            </Dialog.Panel>
-          </Dialog>
-        )}
+        {/* Modals */}
+        <ViewSelectedImageModal
+          open={isOpen}
+          setOpen={setIsOpen}
+          selectedImage={selectedImage}
+          setSelectedImage={setSelectedImage}
+        />
       </Page>
     </>
   );
